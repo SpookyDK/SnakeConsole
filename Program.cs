@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Timers;
-
-
+﻿using System;
 
 namespace Snake_test
 {
@@ -17,18 +13,29 @@ namespace Snake_test
         {
             int width = 20;
             int height = 20;
-            MakeBoard(width, height);
-            //Input();
-            WritePoint(4, 5);
-            Logic();
-            // Create a timer
-            var myTimer = new System.Timers.Timer();
-            // Tell the timer what to do when it elapses
-            myTimer.Elapsed += new ElapsedEventHandler(Logic);
-            // Set it to go off every five seconds
-            myTimer.Interval = 5000;
-            // And start it        
-            myTimer.Enabled = true;
+            SnakeX.Add(4);
+            SnakeY.Add(3);
+            SnakeX.Add(3);
+            SnakeY.Add(3);
+            SnakeX.Add(2);
+            SnakeY.Add(3);
+            SnakeX.Add(2);
+            SnakeY.Add(4);
+            SnakeX.Add(2);
+            SnakeY.Add(5);
+            while (true)
+            {
+                MakeBoard(width, height);
+                Logic();
+                Console.ReadKey();
+            }
+           
+            
+            
+            
+            
+            
+           
         }
         static void MakeBoard(int width, int height)
         {
@@ -79,23 +86,10 @@ namespace Snake_test
             }
         }
 
-        static void WritePoint(int x, int y)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write("*");
-        }
+        
         static void Logic()
         {
-            SnakeX.Add(3);
-            SnakeX.Add(4);
-            SnakeY.Add(3);
-            SnakeY.Add(3);
-            SnakeX.Add(2);
-            SnakeY.Add(3);
-            SnakeX.Add(2);
-            SnakeY.Add(4);
-            SnakeX.Add(2);
-            SnakeY.Add(5);
+            
 
 
             for (int i = SnakeX.Count; i > 1; i--)
@@ -125,7 +119,7 @@ namespace Snake_test
             for (int i = 0; i < SnakeX.Count; i++)
             {
                 Console.SetCursorPosition(SnakeX[i], SnakeY[i]);
-                Console.Write("a");
+                Console.Write("¤");
             }
         }
 
