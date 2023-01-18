@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Timers;
+using System.Threading.Tasks;
 namespace Snake_test
 {
     internal class Program
@@ -8,9 +9,12 @@ namespace Snake_test
         static char Key = 'd';
         static List<int> SnakeX = new List<int>();
         static List<int> SnakeY = new List<int>();
+        
 
         static void Main(string[] args)
         {
+            Int64 timestamp =  Convert.ToInt64(DateTime.Now.ToFileTime());
+            
             int width = 20;
             int height = 20;
             SnakeX.Add(4);
@@ -25,9 +29,15 @@ namespace Snake_test
             SnakeY.Add(5);
             while (true)
             {
-                MakeBoard(width, height);
-                Logic();
-                Console.ReadKey();
+                if (Convert.ToInt64(DateTime.Now.ToFileTime()) - timestamp > 5000000)
+                {
+                    MakeBoard(width, height);
+                    Input();
+                    Logic();
+                    
+                    timestamp =  Convert.ToInt64(DateTime.Now.ToFileTime());
+                }
+                
             }
            
             
@@ -37,6 +47,8 @@ namespace Snake_test
             
            
         }
+
+       
         static void MakeBoard(int width, int height)
         {
 
@@ -109,10 +121,10 @@ namespace Snake_test
                     SnakeX[0]++;
                     break;
                 case ('w'):
-                    SnakeY[0]++;
+                    SnakeY[0]--;
                     break;
                 case ('s'):
-                    SnakeY[0]--;
+                    SnakeY[0]++;
                     break;
             }
 
