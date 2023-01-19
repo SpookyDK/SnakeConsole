@@ -9,14 +9,14 @@ namespace Snake_test
         static char Key = 'd';
         static List<int> SnakeX = new List<int>();
         static List<int> SnakeY = new List<int>();
-        
+        static int width = 20;
+        static int height = 20;
 
         static void Main(string[] args)
         {
             Int64 timestamp =  Convert.ToInt64(DateTime.Now.ToFileTime());
             
-            int width = 20;
-            int height = 20;
+            
             SnakeX.Add(4);
             SnakeY.Add(3);
             SnakeX.Add(3);
@@ -29,9 +29,18 @@ namespace Snake_test
             SnakeY.Add(5);
             while (true)
             {
+                 if (SnakeX[0] < 1 || SnakeX[0] > width - 1)
+                {
+                    break;
+                
+                }
+                if (SnakeY[0] < 1 || SnakeY[0] > height - 1)
+                {
+                    break;
+                }
                 if (Convert.ToInt64(DateTime.Now.ToFileTime()) - timestamp > 5000000)
                 {
-                    MakeBoard(width, height);
+                    MakeBoard();
                     Input();
                     Logic();
                     
@@ -39,6 +48,7 @@ namespace Snake_test
                 }
                 
             }
+           
            
             
             
@@ -49,7 +59,7 @@ namespace Snake_test
         }
 
        
-        static void MakeBoard(int width, int height)
+        static void MakeBoard()
         {
 
             Console.Clear();
@@ -133,6 +143,7 @@ namespace Snake_test
                 Console.SetCursorPosition(SnakeX[i], SnakeY[i]);
                 Console.Write("¤");
             }
+           
         }
 
     }
