@@ -14,21 +14,18 @@ namespace SnakeConsole
         static float frameTiming = 0.5f;
         static int waitFor;
         static float elapsedTime;
+
+        static int fruitX;
+        static int fruitY;
+        static Random random;
         static void Main(string[] args)
         {
-           
+           random = new Random();
 
 
             SnakeX.Add(4);
             SnakeY.Add(3);
-            SnakeX.Add(3);
-            SnakeY.Add(3);
-            SnakeX.Add(2);
-            SnakeY.Add(3);
-            SnakeX.Add(2);
-            SnakeY.Add(4);
-            SnakeX.Add(2);
-            SnakeY.Add(5);
+           
             while (true)
             {
                  DateTime timeStampStart = DateTime.UtcNow;
@@ -46,20 +43,17 @@ namespace SnakeConsole
                     MakeBoard();
                     Input();
                     Logic();
-                Console.SetCursorPosition(0, height + 2);
+                    Console.SetCursorPosition(0, height + 2);
 
                  waitFor = (int)(frameTiming * 1000 - (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
                 System.Threading.Thread.Sleep(waitFor);
             }
             Console.WriteLine(waitFor);
 
+            Console.WriteLine("THIS PROGRAM WAS CREATED BY");
+            System.Console.WriteLine("Esben & David");
 
-
-            Console.Write("hey");
-            //esben
-
-            //This is the best comment
-            Console.Write(" hansome");
+           
 
         }
 
@@ -68,14 +62,14 @@ namespace SnakeConsole
         {
 
             Console.Clear();
-            for (int i = 1; i < width; i++)
+            for (int i = 2; i < width; i++)
             {
                 Console.SetCursorPosition(i, 1);
                 Console.Write("_");
                 Console.SetCursorPosition(i, height);
                 Console.Write("_");
             }
-
+            
 
 
             for (int i = 2; i < height + 1; i++)
@@ -85,17 +79,6 @@ namespace SnakeConsole
                 Console.SetCursorPosition(width, i);
                 Console.Write("|");
             }
-
-
-
-
-
-
-
-
-
-
-
         }
         static void Input()
         {
@@ -106,12 +89,28 @@ namespace SnakeConsole
             }
         }
 
+        static void AddTail()
+        {
+            SnakeX.Add(SnakeX.Count-1);
+            SnakeY.Add(SnakeY.Count-1);
+            
+        }
+
+        static void SpawnFruit()
+        {
+            fruitX = random.Next(1, width);
+            fruitY = random.Next(1, height);
+            Console.SetCursorPosition(fruitX, fruitY);
+            Console.Write("#");
+            
+        }
+
 
         static void Logic()
         {
 
 
-
+            //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
             for (int i = SnakeX.Count; i > 1; i--)
             {
                 SnakeX[i - 1] = SnakeX[i - 2];
@@ -120,6 +119,8 @@ namespace SnakeConsole
             {
                 SnakeY[i - 1] = SnakeY[i - 2];
             }
+
+            //Finds out which way the front of the snake should go
             switch (Key)
             {
                 case ('a'):
@@ -135,7 +136,7 @@ namespace SnakeConsole
                     SnakeY[0]++;
                     break;
             }
-
+            //Writes the actual snake position 
             for (int i = 0; i < SnakeX.Count; i++)
             {
                 Console.SetCursorPosition(SnakeX[i], SnakeY[i]);
