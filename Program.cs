@@ -1,7 +1,7 @@
 using System;
 using System.Timers;
 using System.Threading.Tasks;
-namespace EsbensLort
+namespace SnakeConsole
 {
     internal class Program
     {
@@ -11,10 +11,12 @@ namespace EsbensLort
         static List<int> SnakeY = new List<int>();
         static int width = 20;
         static int height = 20;
-
+        static float frameTiming = 0.5f;
+        static int waitFor;
+        static float elapsedTime;
         static void Main(string[] args)
         {
-            Int64 timestamp = Convert.ToInt64(DateTime.Now.ToFileTime());
+           
 
 
             SnakeX.Add(4);
@@ -29,6 +31,8 @@ namespace EsbensLort
             SnakeY.Add(5);
             while (true)
             {
+                 DateTime timeStampStart = DateTime.UtcNow;
+
                 if (SnakeX[0] < 2 || SnakeX[0] > width - 1)
                 {
                     break;
@@ -38,16 +42,16 @@ namespace EsbensLort
                 {
                     break;
                 }
-                if (Convert.ToInt64(DateTime.Now.ToFileTime()) - timestamp > 5000000)
-                {
+
                     MakeBoard();
                     Input();
                     Logic();
-
-                    timestamp = Convert.ToInt64(DateTime.Now.ToFileTime());
-                }
                 Console.SetCursorPosition(0, height + 2);
+
+                 waitFor = (int)(frameTiming * 1000 - (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
+                System.Threading.Thread.Sleep(waitFor);
             }
+            Console.WriteLine(waitFor);
 
 
 
