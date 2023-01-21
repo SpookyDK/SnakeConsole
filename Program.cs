@@ -11,7 +11,7 @@ namespace SnakeConsole
         static List<int> SnakeY = new List<int>();
         static int width = 20;
         static int height = 20;
-        static float frameTiming = 0.5f;
+        static float frameTiming = 0.33f;
         static int waitFor;
         static float elapsedTime;
 
@@ -25,9 +25,13 @@ namespace SnakeConsole
 
             SnakeX.Add(4);
             SnakeY.Add(3);
+            AddTail();
+            AddTail();
+            SpawnFruit();
            
             while (true)
             {
+                
                  DateTime timeStampStart = DateTime.UtcNow;
 
                 if (SnakeX[0] < 2 || SnakeX[0] > width - 1)
@@ -79,6 +83,8 @@ namespace SnakeConsole
                 Console.SetCursorPosition(width, i);
                 Console.Write("|");
             }
+            Console.SetCursorPosition(fruitX, fruitY);
+            Console.Write("#");
         }
         static void Input()
         {
@@ -98,8 +104,8 @@ namespace SnakeConsole
 
         static void SpawnFruit()
         {
-            fruitX = random.Next(1, width);
-            fruitY = random.Next(1, height);
+            fruitX = random.Next(2, width);
+            fruitY = random.Next(2, height);
             Console.SetCursorPosition(fruitX, fruitY);
             Console.Write("#");
             
@@ -109,7 +115,11 @@ namespace SnakeConsole
         static void Logic()
         {
 
-
+            if (SnakeX[0] == fruitX && SnakeY[0] == fruitY)
+            {
+                AddTail();
+                SpawnFruit();
+            }
             //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
             for (int i = SnakeX.Count; i > 1; i--)
             {
