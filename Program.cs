@@ -26,8 +26,6 @@ namespace SnakeConsole
 
             SnakeX.Add(4);
             SnakeY.Add(3);
-            AddTail();
-            AddTail();
             SpawnFruit();
            
             while (alive)
@@ -41,9 +39,13 @@ namespace SnakeConsole
                     Input();
                     Logic();
                     CollisionCheck();
-                    Console.SetCursorPosition(0, height + 2);
-
+                    
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(SnakeX.Count);
+                 
+                 
                  waitFor = (int)(frameTiming * 1000 - (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
+                 Console.SetCursorPosition(0, height + 2);
                  Console.WriteLine((float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
                 System.Threading.Thread.Sleep(waitFor);
             }
