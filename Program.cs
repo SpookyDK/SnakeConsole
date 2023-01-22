@@ -18,6 +18,7 @@ namespace SnakeConsole
         static int fruitX;
         static int fruitY;
         static Random random;
+        static bool alive = true;
         static void Main(string[] args)
         {
            random = new Random();
@@ -29,33 +30,27 @@ namespace SnakeConsole
             AddTail();
             SpawnFruit();
            
-            while (true)
+            while (alive)
             {
                 
                  DateTime timeStampStart = DateTime.UtcNow;
 
-                if (SnakeX[0] < 2 || SnakeX[0] > width - 1)
-                {
-                    break;
-
-                }
-                if (SnakeY[0] < 2 || SnakeY[0] > height - 2)
-                {
-                    break;
-                }
+                
 
                     MakeBoard();
                     Input();
                     Logic();
+                    CollisionCheck();
                     Console.SetCursorPosition(0, height + 2);
 
                  waitFor = (int)(frameTiming * 1000 - (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
+                 Console.WriteLine((float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
                 System.Threading.Thread.Sleep(waitFor);
             }
             Console.WriteLine(waitFor);
 
             Console.WriteLine("THIS PROGRAM WAS CREATED BY");
-            System.Console.WriteLine("Esben & David");
+            Console.WriteLine("Esben & David");
 
            
 
@@ -109,6 +104,25 @@ namespace SnakeConsole
             Console.SetCursorPosition(fruitX, fruitY);
             Console.Write("#");
             
+        }
+        static void CollisionCheck()
+        {
+            if (SnakeX[0] < 2 || SnakeX[0] > width - 1)
+                {
+                    alive = false;
+
+                }
+                if (SnakeY[0] < 2 || SnakeY[0] > height - 1)
+                {
+                    alive = false;
+                }
+                for (int i = 1; i < SnakeX.Count-1; i++)
+                {
+                    if (SnakeX[0] == SnakeX[i] && SnakeY[0] == SnakeY[i])
+                    {
+                        alive = false;
+                    }
+                }
         }
 
 
