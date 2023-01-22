@@ -21,13 +21,15 @@ namespace SnakeConsole
         static bool alive = true;
         static void Main(string[] args)
         {
+           Console.CursorVisible = false;
+           Console.SetWindowSize(35, 25);
            random = new Random();
-
+           MakeBoard();
 
             SnakeX.Add(4);
             SnakeY.Add(3);
             SpawnFruit();
-           
+            
             while (alive)
             {
                 
@@ -35,7 +37,7 @@ namespace SnakeConsole
 
                 
 
-                    MakeBoard();
+                    
                     Input();
                     Logic();
                     CollisionCheck();
@@ -131,12 +133,15 @@ namespace SnakeConsole
         static void Logic()
         {
 
+            Console.SetCursorPosition(SnakeX[SnakeX.Count -1], SnakeY[SnakeY.Count -1]);
+            Console.Write(' ');
             if (SnakeX[0] == fruitX && SnakeY[0] == fruitY)
             {
                 AddTail();
                 SpawnFruit();
             }
             //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
+
             for (int i = SnakeX.Count; i > 1; i--)
             {
                 SnakeX[i - 1] = SnakeX[i - 2];
@@ -162,14 +167,18 @@ namespace SnakeConsole
                     SnakeY[0]++;
                     break;
             }
+            
             //Writes the actual snake position 
-            for (int i = 0; i < SnakeX.Count; i++)
+            /*for (int i = 0; i < SnakeX.Count; i++)
             {
                 Console.SetCursorPosition(SnakeX[i], SnakeY[i]);
                 Console.Write("¤");
             }
-
+            */
+            Console.SetCursorPosition(SnakeX[0], SnakeY[0]);
+            Console.Write("¤");
         }
 
+        
     }
 }
