@@ -63,7 +63,8 @@ namespace SnakeConsole
 
         static void MakeBoard()
         {
-
+            
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
             for (int i = 2; i < width; i++)
             {
@@ -82,8 +83,9 @@ namespace SnakeConsole
                 Console.SetCursorPosition(width, i);
                 Console.Write("|");
             }
-            Console.SetCursorPosition(fruitX, fruitY);
-            Console.Write("#");
+            Console.ForegroundColor = ConsoleColor.Green;
+            
+
         }
         static void Input()
         {
@@ -106,7 +108,9 @@ namespace SnakeConsole
             fruitX = random.Next(2, width);
             fruitY = random.Next(2, height);
             Console.SetCursorPosition(fruitX, fruitY);
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("#");
+            Console.ForegroundColor = ConsoleColor.Green;
             
         }
         static void CollisionCheck()
@@ -132,6 +136,7 @@ namespace SnakeConsole
 
         static void Logic()
         {
+           
 
             Console.SetCursorPosition(SnakeX[SnakeX.Count -1], SnakeY[SnakeY.Count -1]);
             Console.Write(' ');
