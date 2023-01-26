@@ -22,7 +22,7 @@ namespace SnakeConsole
         static void Main(string[] args)
         {
            Console.CursorVisible = false;
-           Console.SetWindowSize(35, 25);
+           
            random = new Random();
            MakeBoard();
 
@@ -48,10 +48,10 @@ namespace SnakeConsole
                  
                     waitFor = (int)(frameTiming * 1000 - (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
                     Console.SetCursorPosition(0, height + 2);
-                    Console.WriteLine((float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
+                    Console.WriteLine((float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds + "ms");
                     System.Threading.Thread.Sleep(waitFor);
             }
-            Console.WriteLine(waitFor);
+            Console.WriteLine(waitFor + "ms");
 
             Console.WriteLine("THIS PROGRAM WAS CREATED BY");
             Console.WriteLine("Esben & David");
