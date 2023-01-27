@@ -17,6 +17,10 @@ namespace SnakeConsole
         static float frameTiming = 0.33f;
         static int waitFor;
         static float elapsedTime;
+        static int frames  = 0 ;
+        static float avgFrameTime  = 0 ;
+        static float totalFrameTime  = 0;
+        static float frameTime = 0;
 
         static int fruitX;
         static int fruitY;
@@ -24,7 +28,10 @@ namespace SnakeConsole
         static bool alive = true;
         static void Main(string[] args)
         {
+            
             Console.CursorVisible = false;
+            
+            totalFrameTime = 0;
 
             random = new Random();
             MakeBoard();
@@ -47,15 +54,23 @@ namespace SnakeConsole
 
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine(SnakeX.Count);
-
-
-                waitFor = (int)(frameTiming * 1000 - (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds);
+                //tids stuffd
+                frames ++;
+                frameTime = (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds;
+                
+                totalFrameTime += frameTime ;
+                
                 Console.SetCursorPosition(0, height + 2);
-                Console.WriteLine((float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds + "ms");
+                Console.WriteLine(frameTime + "ms");
+                Console.WriteLine("totalFrameTime " + totalFrameTime);
+                Console.WriteLine("avg " + totalFrameTime/frames + "ms");
+
+                waitFor = (int)(frameTiming * 1000 - frameTime);
                 System.Threading.Thread.Sleep(waitFor);
             }
 
             Console.WriteLine(waitFor + "ms");
+            
 
             Console.WriteLine("THIS PROGRAM WAS CREATED BY");
             Console.WriteLine("Esben & David");
