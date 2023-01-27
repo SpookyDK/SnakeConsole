@@ -51,6 +51,7 @@ namespace SnakeConsole
                     Console.WriteLine((float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds + "ms");
                     System.Threading.Thread.Sleep(waitFor);
             }
+            
             Console.WriteLine(waitFor + "ms");
 
             Console.WriteLine("THIS PROGRAM WAS CREATED BY");
