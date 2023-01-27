@@ -113,7 +113,7 @@ namespace SnakeConsole
             {
                 fruitX = random.Next(2, width);
                 fruitY = random.Next(2, height);
-                if (SnakeX.Contains(fruitX) && SnakeY.Contains(fruitY))
+                if (!SnakeX.Contains(fruitX) && !SnakeY.Contains(fruitY))
                 {
                     Console.SetCursorPosition(fruitX, fruitY);
                     Console.ForegroundColor = ConsoleColor.Red;
