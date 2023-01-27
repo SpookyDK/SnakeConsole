@@ -73,8 +73,8 @@ namespace SnakeConsole
             
 
             Console.WriteLine("THIS PROGRAM WAS CREATED BY");
-            Console.WriteLine("Esben & David");
-
+            Console.Write("Esben & ");
+            Console.WriteLine("David is a fucking dumbass");
 
 
         }
