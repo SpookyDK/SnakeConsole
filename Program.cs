@@ -51,14 +51,17 @@ namespace SnakeConsole
 
 
 
-
+                CollisionCheck();
                 Input();
                 Logic();
-                CollisionCheck();
-                Console.SetCursorPosition(fruitX[fruitX.Count-1], fruitY[fruitY.Count - 1]);
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("#");
+                WriteFruits();
                 Console.ForegroundColor = ConsoleColor.Green;
+                
+                
+                
+                
+                
 
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine(SnakeX.Count);
@@ -184,35 +187,16 @@ namespace SnakeConsole
         static void Logic()
         {
 
+            
 
+            
+            SnakeX.Insert(1, SnakeX[0]);
+            SnakeY.Insert(1, SnakeY[0]);
+            SnakeX.RemoveAt(SnakeX.Count-1);
+            SnakeY.RemoveAt(SnakeY.Count-1);
             Console.SetCursorPosition(SnakeX[SnakeX.Count - 1], SnakeY[SnakeY.Count - 1]);
             Console.Write(' ');
-            for (int i = 0; i < fruitX.Count; i++)
-            {
-                if (fruitX[i] == SnakeX[0])
-                {
-                    if (fruitY[i] == SnakeY[0])
-                    {
-                        AddTail();
-                        fruitX.RemoveAt(i);
-                        fruitY.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
-            //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
-
-            for (int i = SnakeX.Count; i > 1; i--)
-            {
-                SnakeX[i - 1] = SnakeX[i - 2];
-            }
-            for (int i = SnakeY.Count; i > 1; i--)
-            {
-                SnakeY[i - 1] = SnakeY[i - 2];
-            }
-
-            //Finds out which way the front of the snake should go
-            switch (Key)
+              switch (Key)
             {
                 case ('a'):
                     SnakeX[0]--;
@@ -226,27 +210,42 @@ namespace SnakeConsole
                 case ('s'):
                     SnakeY[0]++;
                     break;
-                case ('i'):
-                   WriteFriuts();
-                    break;
+               
             }
 
-            //Writes the actual snake position 
-            /*for (int i = 0; i < SnakeX.Count; i++)
-            {
-                Console.SetCursorPosition(SnakeX[i], SnakeY[i]);
-                Console.Write("¤");
-            }
-            */
+          
             Console.SetCursorPosition(SnakeX[0], SnakeY[0]);
             Console.Write("¤");
+            for (int i = 0; i < fruitX.Count; i++)
+            {
+                if (fruitX[i] == SnakeX[0])
+                {
+                    if (fruitY[i] == SnakeY[0])
+                    {
+                        AddTail();
+                        Console.SetCursorPosition(fruitX[i], fruitY[i]);
+                        Console.Write("¤");
+                        fruitX.RemoveAt(i);
+                        fruitY.RemoveAt(i);
+                        
+                        break;
+                    }
+                }
+            }
         }
-        static void WriteFriuts()
+            
+            //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
+            
+           
+
+            //Finds out which way the front of the snake should go
+          
+        static void WriteFruits()
         {
                 for (int i = 0; i < fruitX.Count; i++)
                     {
                         Console.SetCursorPosition(fruitX[i], fruitY[i]);
-                        Console.Write("0");
+                        Console.Write("#");
                     }
 
         }
