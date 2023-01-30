@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Dynamic;
 using System.Threading;
 
 
@@ -17,20 +17,22 @@ namespace SnakeConsole
         static float frameTiming = 0.33f;
         static int waitFor;
         static float elapsedTime;
-        static int frames  = 0 ;
-        static float avgFrameTime  = 0 ;
-        static float totalFrameTime  = 0;
+        static int frames = 0;
+        static float avgFrameTime = 0;
+        static float totalFrameTime = 0;
         static float frameTime = 0;
 
-        static int fruitX;
-        static int fruitY;
+        static int randomizer = 5;                  //in percentage
+        static int fruitSpawnTime = 2000;           //in milliseconds
+        static List<int> fruitX = new List<int>();
+        static List<int> fruitY = new List<int>();
         static Random random;
         static bool alive = true;
         static void Main(string[] args)
         {
-            
+
             Console.CursorVisible = false;
-            
+
             totalFrameTime = 0;
 
             random = new Random();
@@ -39,6 +41,8 @@ namespace SnakeConsole
             SnakeX.Add(4);
             SnakeY.Add(3);
             SpawnFruit();
+            Thread randomFruitThread = new Thread(RandomFruitSpawn);
+            randomFruitThread.Start();
 
             while (alive)
             {
@@ -51,30 +55,35 @@ namespace SnakeConsole
                 Input();
                 Logic();
                 CollisionCheck();
+                Console.SetCursorPosition(fruitX[fruitX.Count-1], fruitY[fruitY.Count - 1]);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("#");
+                Console.ForegroundColor = ConsoleColor.Green;
 
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine(SnakeX.Count);
                 //tids stuffd
-                frames ++;
+                frames++;
                 frameTime = (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds;
-                
-                totalFrameTime += frameTime ;
-                
+
+                totalFrameTime += frameTime;
+
                 Console.SetCursorPosition(0, height + 2);
                 Console.WriteLine(frameTime + "ms");
                 Console.WriteLine("totalFrameTime " + totalFrameTime);
-                Console.WriteLine("avg " + totalFrameTime/frames + "ms");
+                Console.WriteLine("avg " + totalFrameTime / frames + "ms");
 
                 waitFor = (int)(frameTiming * 1000 - frameTime);
                 System.Threading.Thread.Sleep(waitFor);
             }
 
+
             Console.WriteLine(waitFor + "ms");
-            
+
 
             Console.WriteLine("THIS PROGRAM WAS CREATED BY");
             Console.Write("Esben & ");
-            Console.WriteLine("David is a fucking dumbass");
+            Console.WriteLine("David helped, i suppose");
 
 
         }
@@ -126,17 +135,29 @@ namespace SnakeConsole
         {
             while (true)
             {
-                fruitX = random.Next(2, width);
-                fruitY = random.Next(2, height);
-                if (!SnakeX.Contains(fruitX) && !SnakeY.Contains(fruitY))
+                int tempFruitX = random.Next(2, width);
+                int tempFruitY = random.Next(2, height);
+                if (!SnakeX.Contains(tempFruitX) && !SnakeY.Contains(tempFruitY))
                 {
-                    Console.SetCursorPosition(fruitX, fruitY);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("#");
-                    Console.ForegroundColor = ConsoleColor.Green;
+                   
+                    fruitX.Add(tempFruitX);
+                    fruitY.Add(tempFruitY);
                     return;
                 }
             }
+        }
+        static void RandomFruitSpawn()
+        {
+            int plusMinus = random.Next(100 - randomizer, 100 + randomizer);
+            while (alive)
+            {
+                if (fruitX.Count < 5)
+                {
+                    SpawnFruit();
+                }
+                Thread.Sleep(fruitSpawnTime * (plusMinus / 100));
+            }
+
         }
         static void CollisionCheck()
         {
@@ -165,10 +186,18 @@ namespace SnakeConsole
 
             Console.SetCursorPosition(SnakeX[SnakeX.Count - 1], SnakeY[SnakeY.Count - 1]);
             Console.Write(' ');
-            if (SnakeX[0] == fruitX && SnakeY[0] == fruitY)
+            for (int i = 0; i < fruitX.Count; i++)
             {
-                AddTail();
-                SpawnFruit();
+                if (fruitX[i] == SnakeX[0])
+                {
+                    if (fruitY[i] == SnakeY[0])
+                    {
+                        AddTail();
+                        fruitX.RemoveAt(i);
+                        fruitY.RemoveAt(i);
+                        break;
+                    }
+                }
             }
             //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
 
