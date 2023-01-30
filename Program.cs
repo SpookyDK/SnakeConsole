@@ -23,7 +23,7 @@ namespace SnakeConsole
         static float frameTime = 0;
 
         static int randomizer = 5;                  //in percentage
-        static int fruitSpawnTime = 2000;           //in milliseconds
+        static int fruitSpawnTime = 5000;           //in milliseconds
         static List<int> fruitX = new List<int>();
         static List<int> fruitY = new List<int>();
         static Random random;
@@ -32,15 +32,13 @@ namespace SnakeConsole
         {
 
             Console.CursorVisible = false;
-
-            totalFrameTime = 0;
-
             random = new Random();
             MakeBoard();
 
             SnakeX.Add(4);
             SnakeY.Add(3);
-            SpawnFruit();
+
+            
             Thread randomFruitThread = new Thread(RandomFruitSpawn);
             randomFruitThread.Start();
 
@@ -152,14 +150,14 @@ namespace SnakeConsole
         }
         static void RandomFruitSpawn()
         {
-            int plusMinus = random.Next(100 - randomizer, 100 + randomizer);
+            
             while (alive)
             {
                 if (fruitX.Count < 5)
                 {
                     SpawnFruit();
                 }
-                Thread.Sleep(fruitSpawnTime * (plusMinus / 100));
+                Thread.Sleep(fruitSpawnTime);
             }
 
         }
@@ -192,6 +190,8 @@ namespace SnakeConsole
             
             SnakeX.Insert(1, SnakeX[0]);
             SnakeY.Insert(1, SnakeY[0]);
+            Console.SetCursorPosition(SnakeX[1], SnakeY[1]);
+            Console.Write("¤");
             SnakeX.RemoveAt(SnakeX.Count-1);
             SnakeY.RemoveAt(SnakeY.Count-1);
             Console.SetCursorPosition(SnakeX[SnakeX.Count - 1], SnakeY[SnakeY.Count - 1]);
@@ -213,7 +213,7 @@ namespace SnakeConsole
                
             }
 
-          
+            
             Console.SetCursorPosition(SnakeX[0], SnakeY[0]);
             Console.Write("¤");
             for (int i = 0; i < fruitX.Count; i++)
@@ -234,11 +234,7 @@ namespace SnakeConsole
             }
         }
             
-            //Moves the snake. Starts from the back and moves everypoint to the coordinates of the next point.
             
-           
-
-            //Finds out which way the front of the snake should go
           
         static void WriteFruits()
         {
