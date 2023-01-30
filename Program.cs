@@ -72,6 +72,7 @@ namespace SnakeConsole
                 Console.WriteLine(frameTime + "ms");
                 Console.WriteLine("totalFrameTime " + totalFrameTime);
                 Console.WriteLine("avg " + totalFrameTime / frames + "ms");
+                Console.WriteLine(fruitX.Count);
 
                 waitFor = (int)(frameTiming * 1000 - frameTime);
                 System.Threading.Thread.Sleep(waitFor);
@@ -225,6 +226,9 @@ namespace SnakeConsole
                 case ('s'):
                     SnakeY[0]++;
                     break;
+                case ('i'):
+                   WriteFriuts();
+                    break;
             }
 
             //Writes the actual snake position 
@@ -237,7 +241,15 @@ namespace SnakeConsole
             Console.SetCursorPosition(SnakeX[0], SnakeY[0]);
             Console.Write("¤");
         }
+        static void WriteFriuts()
+        {
+                for (int i = 0; i < fruitX.Count; i++)
+                    {
+                        Console.SetCursorPosition(fruitX[i], fruitY[i]);
+                        Console.Write("0");
+                    }
 
+        }
 
     }
 }
