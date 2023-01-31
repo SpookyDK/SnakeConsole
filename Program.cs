@@ -30,39 +30,59 @@ namespace SnakeConsole
         {
             Console.CursorVisible = false;
             random = new Random();
-            MakeBoard();
-            SnakeX.Add(4);
-            SnakeY.Add(3);
             Thread randomFruitThread = new Thread(RandomFruitSpawn);
             randomFruitThread.Start();
-            while (alive)
+            while (true)
             {
-                DateTime timeStampStart = DateTime.UtcNow;
-                CollisionCheck();
-                Input();
-                Logic();
-                Console.ForegroundColor = ConsoleColor.Red;
-                if (fruitXQ.Count > 0)
-                    WriteFruits();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine(SnakeX.Count);
-                //tids stuffd
-                frames++;
-                frameTime = (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds;
-                totalFrameTime += frameTime;
-                Console.SetCursorPosition(0, height + 2);
-                Console.WriteLine(frameTime + "ms");
-                Console.WriteLine("totalFrameTime " + totalFrameTime);
-                Console.WriteLine("avg " + totalFrameTime / frames + "ms");
-                Console.WriteLine(fruitX.Count);
-                waitFor = (int)(frameTiming * 1000 - frameTime);
-                Thread.Sleep(waitFor);
+                
+                Key = 'd';
+                MakeBoard();
+                SnakeX.Clear();
+                SnakeY.Clear();
+                fruitX.Clear();
+                fruitY.Clear();
+                SnakeX.Add(4);
+                SnakeY.Add(3);
+                
+                while (alive)
+                {
+                    DateTime timeStampStart = DateTime.UtcNow;
+                    CollisionCheck();
+                    Input();
+                    Logic();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    if (fruitXQ.Count > 0)
+                        WriteFruits();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.SetCursorPosition(0, 0);
+                    Console.WriteLine(SnakeX.Count);
+                    //tids stuffd
+                    frames++;
+                    frameTime = (float)(DateTime.UtcNow - timeStampStart).TotalMilliseconds;
+                    totalFrameTime += frameTime;
+                    Console.SetCursorPosition(0, height + 2);
+                    Console.WriteLine(frameTime + "ms");
+                    Console.WriteLine("totalFrameTime " + totalFrameTime);
+                    Console.WriteLine("avg " + totalFrameTime / frames + "ms");
+                    Console.WriteLine(fruitX.Count);
+                    waitFor = (int)(frameTiming * 1000 - frameTime);
+                    Thread.Sleep(waitFor);
+                }
+                Console.WriteLine(waitFor + "ms");
+                Console.WriteLine("THIS PROGRAM WAS CREATED BY");
+                Console.Write("Esben & ");
+                Console.WriteLine("David helped, i suppose");
+                Console.WriteLine("Press any button to continue");
+                Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Want to play again?");
+                Console.WriteLine("Press any button to continue");
+                Console.WriteLine("press ctrl+c to exit");
+                Console.ReadLine();
+                alive = true;
             }
-            Console.WriteLine(waitFor + "ms");
-            Console.WriteLine("THIS PROGRAM WAS CREATED BY");
-            Console.Write("Esben & ");
-            Console.WriteLine("David helped, i suppose");
+            
+
         }
 
 
