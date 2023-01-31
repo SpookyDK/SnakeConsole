@@ -139,7 +139,7 @@ namespace SnakeConsole
             {
                 if (fruitX.Count < 5)
                     SpawnFruit();
-                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard
+                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard | Well fuck you, it was just not necessary.
             }
         }
         static void CollisionCheck()
