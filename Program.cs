@@ -34,7 +34,6 @@ namespace SnakeConsole
             randomFruitThread.Start();
             while (true)
             {
-                
                 Key = 'd';
                 MakeBoard();
                 SnakeX.Clear();
@@ -43,7 +42,6 @@ namespace SnakeConsole
                 fruitY.Clear();
                 SnakeX.Add(4);
                 SnakeY.Add(3);
-                
                 while (alive)
                 {
                     DateTime timeStampStart = DateTime.UtcNow;
@@ -64,7 +62,6 @@ namespace SnakeConsole
                     Console.WriteLine(frameTime + "ms");
                     Console.WriteLine("totalFrameTime " + totalFrameTime);
                     Console.WriteLine("avg " + totalFrameTime / frames + "ms");
-                    Console.WriteLine(fruitX.Count);
                     waitFor = (int)(frameTiming * 1000 - frameTime);
                     Thread.Sleep(waitFor);
                 }
@@ -72,20 +69,15 @@ namespace SnakeConsole
                 Console.WriteLine("THIS PROGRAM WAS CREATED BY");
                 Console.Write("Esben & ");
                 Console.WriteLine("David helped, i suppose");
-                Console.WriteLine("Press any button to continue");
-                Console.ReadLine();
-                Console.Clear();
+                Console.WriteLine("");
                 Console.WriteLine("Want to play again?");
                 Console.WriteLine("Press any button to continue");
                 Console.WriteLine("press ctrl+c to exit");
-                Console.ReadLine();
+                Console.ReadKey();
+                Console.Clear();
                 alive = true;
             }
-            
-
         }
-
-
         static void MakeBoard()
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -135,11 +127,11 @@ namespace SnakeConsole
         }
         static void RandomFruitSpawn()
         {
-            while (alive)
+            while (true)
             {
                 if (fruitX.Count < 5)
                     SpawnFruit();
-                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard | Well fuck you, it was just not necessary.
+                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard | Well fuck you, it was just not necessary. | fuck you again, no it was not "needed" but its called random ticks which makes good gameplay, loser.
             }
         }
         static void CollisionCheck()
