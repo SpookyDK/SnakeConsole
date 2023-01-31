@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Threading;
 
 
@@ -25,7 +24,9 @@ namespace SnakeConsole
         static int randomizer = 5;                  //in percentage
         static int fruitSpawnTime = 5000;           //in milliseconds
         static List<int> fruitX = new List<int>();
+        static Queue<int> fruitXQ = new Queue<int>();
         static List<int> fruitY = new List<int>();
+        static Queue<int> fruitYQ = new Queue<int>();
         static Random random;
         static bool alive = true;
         static void Main(string[] args)
@@ -38,7 +39,7 @@ namespace SnakeConsole
             SnakeX.Add(4);
             SnakeY.Add(3);
 
-            
+
             Thread randomFruitThread = new Thread(RandomFruitSpawn);
             randomFruitThread.Start();
 
@@ -53,13 +54,14 @@ namespace SnakeConsole
                 Input();
                 Logic();
                 Console.ForegroundColor = ConsoleColor.Red;
-                WriteFruits();
+                if (fruitXQ.Count > 0)
+                    WriteFruits();
                 Console.ForegroundColor = ConsoleColor.Green;
-                
-                
-                
-                
-                
+
+
+
+
+
 
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine(SnakeX.Count);
@@ -76,7 +78,7 @@ namespace SnakeConsole
                 Console.WriteLine(fruitX.Count);
 
                 waitFor = (int)(frameTiming * 1000 - frameTime);
-                System.Threading.Thread.Sleep(waitFor);
+                Thread.Sleep(waitFor);
             }
 
 
@@ -130,7 +132,6 @@ namespace SnakeConsole
         {
             SnakeX.Add(SnakeX.Count - 1);
             SnakeY.Add(SnakeY.Count - 1);
-
         }
 
         static void SpawnFruit()
@@ -141,23 +142,22 @@ namespace SnakeConsole
                 int tempFruitY = random.Next(2, height);
                 if (!SnakeX.Contains(tempFruitX) && !SnakeY.Contains(tempFruitY))
                 {
-                   
-                    fruitX.Add(tempFruitX);
-                    fruitY.Add(tempFruitY);
+                    fruitXQ.Enqueue(tempFruitX);
+                    fruitYQ.Enqueue(tempFruitY);
                     return;
                 }
             }
         }
         static void RandomFruitSpawn()
         {
-            
+
             while (alive)
             {
                 if (fruitX.Count < 5)
                 {
                     SpawnFruit();
                 }
-                Thread.Sleep(fruitSpawnTime);
+                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard
             }
 
         }
@@ -185,18 +185,18 @@ namespace SnakeConsole
         static void Logic()
         {
 
-            
 
-            
+
+
             SnakeX.Insert(1, SnakeX[0]);
             SnakeY.Insert(1, SnakeY[0]);
             Console.SetCursorPosition(SnakeX[1], SnakeY[1]);
             Console.Write("¤");
-            SnakeX.RemoveAt(SnakeX.Count-1);
-            SnakeY.RemoveAt(SnakeY.Count-1);
+            SnakeX.RemoveAt(SnakeX.Count - 1);
+            SnakeY.RemoveAt(SnakeY.Count - 1);
             Console.SetCursorPosition(SnakeX[SnakeX.Count - 1], SnakeY[SnakeY.Count - 1]);
             Console.Write(' ');
-              switch (Key)
+            switch (Key)
             {
                 case ('a'):
                     SnakeX[0]--;
@@ -210,10 +210,10 @@ namespace SnakeConsole
                 case ('s'):
                     SnakeY[0]++;
                     break;
-               
+
             }
 
-            
+
             Console.SetCursorPosition(SnakeX[0], SnakeY[0]);
             Console.Write("¤");
             for (int i = 0; i < fruitX.Count; i++)
@@ -227,23 +227,21 @@ namespace SnakeConsole
                         Console.Write("¤");
                         fruitX.RemoveAt(i);
                         fruitY.RemoveAt(i);
-                        
+
                         break;
                     }
                 }
             }
         }
-            
-            
-          
         static void WriteFruits()
         {
-                for (int i = 0; i < fruitX.Count; i++)
-                    {
-                        Console.SetCursorPosition(fruitX[i], fruitY[i]);
-                        Console.Write("#");
-                    }
-
+            while (fruitXQ.Count > 0)
+            {
+                Console.SetCursorPosition(Convert.ToInt32(fruitXQ.Peek()), Convert.ToInt32(fruitYQ.Peek()));
+                Console.Write("#");
+                fruitX.Add(Convert.ToInt32(fruitXQ.Dequeue()));
+                fruitY.Add(Convert.ToInt32(fruitYQ.Dequeue()));
+            }
         }
 
     }
