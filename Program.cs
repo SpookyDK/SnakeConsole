@@ -5,7 +5,7 @@ namespace SnakeConsole
 {
     internal class Program
     {
-        static ConsoleKeyInfo KeyInfo = new ConsoleKeyInfo();
+          ConsoleKeyInfo KeyInfo = new ConsoleKeyInfo();
         static char Key = 'd';
         static List<int> SnakeX = new List<int>();
         static List<int> SnakeY = new List<int>();
@@ -13,12 +13,9 @@ namespace SnakeConsole
         static int height = 20;
         static float frameTiming = 0.2f;
         static int waitFor;
-        static float elapsedTime;
         static int frames = 0;
-        static float avgFrameTime = 0;
         static float totalFrameTime = 0;
         static float frameTime = 0;
-        static int randomizer = 5;                  //in percentage
         static int fruitSpawnTime = 3333;           //in milliseconds
         static List<int> fruitX = new List<int>();
         static Queue<int> fruitXQ = new Queue<int>();
