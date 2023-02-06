@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 namespace SnakeConsole
 {
@@ -66,7 +67,7 @@ namespace SnakeConsole
                 Console.WriteLine("THIS PROGRAM WAS CREATED BY");
                 Console.Write("Esben & ");
                 Console.WriteLine("David helped, i suppose");
-                Console.WriteLine("");
+                Console.WriteLine();
                 Console.WriteLine("Want to play again?");
                 Console.WriteLine("Press any button to continue");
                 Console.WriteLine("press ctrl+c to exit");
@@ -78,15 +79,16 @@ namespace SnakeConsole
         static void MakeBoard()
         {
             Console.ForegroundColor = ConsoleColor.White;
+            Console.OutputEncoding = Encoding.UTF8;
             Console.Clear();
             for (int i = 2; i < width; i++)
             {
                 Console.SetCursorPosition(i, 1);
                 Console.Write("_");
                 Console.SetCursorPosition(i, height);
-                Console.Write("_");
+                Console.Write('\u203E');
             }
-            for (int i = 2; i < height + 1; i++)
+            for (int i = 2; i < height; i++)
             {
                 Console.SetCursorPosition(1, i);
                 Console.Write("|");
@@ -181,7 +183,7 @@ namespace SnakeConsole
                         Console.Write("¤");
                         fruitX.RemoveAt(i);
                         fruitY.RemoveAt(i);
-                        break;
+                        break;                       
                     }
                 }
             }
