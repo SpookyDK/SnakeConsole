@@ -5,7 +5,7 @@ namespace SnakeConsole
 {
     internal class Program
     {
-          ConsoleKeyInfo KeyInfo = new ConsoleKeyInfo();
+        static ConsoleKeyInfo KeyInfo = new ConsoleKeyInfo();
         static char Key = 'd';
         static List<int> SnakeX = new List<int>();
         static List<int> SnakeY = new List<int>();
