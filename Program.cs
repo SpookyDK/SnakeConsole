@@ -136,7 +136,7 @@ namespace SnakeConsole
             {
                 if (fruitX.Count < 5)
                     SpawnFruit();
-                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard | Well fuck you, it was just not necessary. | fuck you again, no it was not "needed" but its called random ticks which makes good gameplay, loser.
+                Thread.Sleep(fruitSpawnTime);           //you removed my randomizer, you bastard | Well fuck you, it was just not necessary. | fuck you again, no it was not "needed" but its called random ticks which makes good gameplay, loser. || your time difference was so little that no one would ever notice, so it was just a big performace hole, loser!
             }
         }
         static void CollisionCheck()
