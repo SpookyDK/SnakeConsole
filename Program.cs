@@ -62,6 +62,7 @@ namespace SnakeConsole
                     Console.WriteLine("avg " + totalFrameTime / frames + "ms");
                     waitFor = (int)(frameTiming * 1000 - frameTime);
                     Thread.Sleep(waitFor);
+                    Console.WriteLine("Current Frametime = " + frameTiming);                    
                 }
                 Console.WriteLine(waitFor + "ms");
                 Console.WriteLine("THIS PROGRAM WAS CREATED BY");
@@ -74,6 +75,10 @@ namespace SnakeConsole
                 Console.ReadKey();
                 Console.Clear();
                 alive = true;
+                fruitXQ.Clear();
+                fruitX.Clear();
+                fruitYQ.Clear();
+                fruitY.Clear();
             }
         }
         static void MakeBoard()
@@ -109,6 +114,7 @@ namespace SnakeConsole
         {
             SnakeX.Add(SnakeX.Count - 1);
             SnakeY.Add(SnakeY.Count - 1);
+            frameTiming *= 0.985f;
         }
         static void SpawnFruit()
         {
