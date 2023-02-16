@@ -78,6 +78,7 @@ namespace SnakeConsole
                 fruitX.Clear();
                 fruitYQ.Clear();
                 fruitY.Clear();
+                frameTiming = 0.2f;
             }
         }
         static void MakeBoard()
