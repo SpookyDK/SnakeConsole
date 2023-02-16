@@ -62,12 +62,11 @@ namespace SnakeConsole
                     Console.WriteLine("avg " + totalFrameTime / frames + "ms");
                     waitFor = (int)(frameTiming * 1000 - frameTime);
                     Thread.Sleep(waitFor);
-                    Console.WriteLine("Current Frametime = " + frameTiming);                    
+                    Console.WriteLine("Current Frametime = " + frameTiming);
                 }
                 Console.WriteLine(waitFor + "ms");
                 Console.WriteLine("THIS PROGRAM WAS CREATED BY");
-                Console.Write("Esben & ");
-                Console.WriteLine("David helped, i suppose");
+                Console.WriteLine("Esben & David helped, i suppose");
                 Console.WriteLine();
                 Console.WriteLine("Want to play again?");
                 Console.WriteLine("Press any button to continue");
@@ -146,10 +145,8 @@ namespace SnakeConsole
             if (SnakeY[0] < 2 || SnakeY[0] > height - 1)
                 alive = false;
             for (int i = 1; i < SnakeX.Count - 1; i++)
-            {
                 if (SnakeX[0] == SnakeX[i] && SnakeY[0] == SnakeY[i])
                     alive = false;
-            }
         }
         static void Logic()
         {
@@ -179,9 +176,7 @@ namespace SnakeConsole
             SnakeX.RemoveAt(SnakeX.Count - 1);
             SnakeY.RemoveAt(SnakeY.Count - 1);
             for (int i = 0; i < fruitX.Count; i++)
-            {
                 if (fruitX[i] == SnakeX[0])
-                {
                     if (fruitY[i] == SnakeY[0])
                     {
                         AddTail();
@@ -189,10 +184,8 @@ namespace SnakeConsole
                         Console.Write("¤");
                         fruitX.RemoveAt(i);
                         fruitY.RemoveAt(i);
-                        break;                       
+                        break;
                     }
-                }
-            }
         }
         static void WriteFruits()
         {
